@@ -1,0 +1,68 @@
+# Construct  -  cons tool Makefile (see http://www.dsmit.com/cons/)
+# 6.10.1999, Sampo Kellomaki <sampo@iki.fi>
+#
+# Usage: cons smime
+#
+# Build smime tool
+
+$CONS = new cons(
+	CFLAGS  => '-g -Dbool=char -fpic',	
+	CPPPATH => '/usr/local/ssl/include',
+	LDFLAGS => '-g',
+	LIBPATH => '/usr/local/ssl/lib:.',
+#	LIBS    => '-lefence -lsmime -lcrypto',
+	LIBS    => '-lsmime -lcrypto',
+	ENV     => { PATH => '/bin:/usr/bin:/usr/local/bin' },
+	);
+
+Program $CONS 'smime', qw( smime.c );
+
+Program $CONS 'testmalloc', qw( malloc.c testmalloc.c );
+
+### smimeutil library
+
+$CONSLIB = new cons(
+	CFLAGS  => '-g -Dbool=char -fpic',
+	CPPPATH => '/usr/local/ssl/include',
+	LDFLAGS => '-g',
+	);
+
+Library $CONSLIB 'libsmime.a', qw(
+	certauth.c
+	keygen.c
+	pkcs12.c
+	smime-qry.c
+	smime-enc.c
+	smime-vfy.c
+	smimemime.c
+	smimeutil.c
+	);
+
+### Perl module interface to libsmime
+
+$CONSXS = new cons(
+	CFLAGS  => '-g -Dbool=char -fpic',	
+	CPPPATH => '/usr/local/ssl/include:/usr/lib/perl5/5.00502/i686-linux/CORE',
+	LDFLAGS => '-g -shared',
+	LIBPATH => '/usr/local/ssl/lib:.',
+	LIBS    => '-lsmime -lcrypto',
+	ENV     => { PATH => '/bin:/usr/bin:/usr/local/bin' },
+	);
+
+Command $CONSXS 'smimeutil_wrap.c', qw(smimeutil.i smimeutil.h),
+	"swig -dnone -perl5 smimeutil.i";
+
+Module $CONSXS 'SMIMEUtil.so', qw(smimeutil_wrap.c), "%LINKCOM";
+
+### Installation section
+
+Command $CONS 'cp', qw(SMIMEUtil.so),
+	"scp SMIME.so SMIME.pm estrela:/home/fct/lib";
+
+### Maintenance section
+
+Command $CONS 'clean', qw(), "rm -f *.o libsmime.a smimeutil_wrap.c";
+Command $CONS 'cleaner', qw(clean), "rm -f SMIMEUtil.so SMIMEUtil.pm smime";
+Command $CONS 'dist', qw(), "./makedist.pl smime";
+
+#EOF

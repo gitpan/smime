@@ -1,0 +1,30 @@
+README          - Tutorial and build instructions
+INSTALL         - Condensed build instructions
+LICENSE         - Copyright and copying conditions
+MANIFEST        - This file
+Version         - Version of this distribution
+Announce	- A blurb
+Changes         - (incomplete?) list of changes and versions
+Construct       - Build instructions for cons tool (like a Makefile)
+smime.c         - Source for the command line tool
+certauth.c      - Certificate authority functionality
+keygen.c        - Key generation and self signed certificate
+pkcs12.c        - Importand export PKCS12
+smime-enc.c     - Encryption and signing functions
+smime-vfy.c     - Signature verification and decryption
+smime-qry.c     - Query certificate fields and other info
+smimemime.c     - Wrap stuff in mime entities
+smimeutil.c     - Utility functions
+smimeutil.h     - Headerfile for the whole thing
+logprint.h      - Debugging macros
+macglue.h       - Macintosh specific kludges
+make            - obsolete shell script to build this stuff. Use cons instead.
+hash-certs.pl   - Hash certs for SSLeay type certificate directory
+send.pl         - Send mail
+filex.pm        - Locking file operations (of generic utility)
+tcpcat.pm       - Send and receive data over TCP connections (like http)
+smimeutil.i     - Swig interface definition file for building the perl module
+test.pl         - Tests the perl module
+test-smime.pl   - Tests the command line tool
+mkdist.pl       - Eats MANIFEST and makes a distribution tarball (generic)
+pass-password.pl - Demonstrates passing passwords securely

@@ -1,0 +1,20 @@
+OFFICIAL WEB SITE
+	http://www.bacus.pt/Net_SSLeay/smime.html
+
+BUILDING
+
+	(build and install OpenSSL-0.9.4, from www.openssl.org)
+	tar xvzf smime-0.xx.tgz
+	cd smime-0.xx
+	cons smime        # get cons from http://www.dsmit.com/cons/
+	cons SMIMEUtil.so # build the perl module (optional)
+	./smime -help     # shows quick usage
+	./smime -dv ../smime-0.7.tgz
+	    (cut my certificate and distribution signature from the web
+	     site and paste to stdin)
+
+Note: There is no Makefile. The Construct file does the trick.
+
+For more info and tutorial, consult the README
+
+--Sampo
